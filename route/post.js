@@ -14,5 +14,6 @@ route.delete('/:id',
 );
 
 route.post('/:postId/comment', commentController?.createComment);
+//route.put('/:PostId/like', commentController?.createLike);
  
 module.exports = route;

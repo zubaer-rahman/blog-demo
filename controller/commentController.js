@@ -4,12 +4,12 @@ const Comment = require('../Model/Comment');
 
 let createComment = (req, res) =>{
 
-    //create post
-    //find post associated with this comment
-    //update post
+    //create Post
+    //find Post associated with this comment
+    //update Post
 
 
-    let postId = req.params.postId;
+    let postId = req.params.postId; 
 
     const newComment = new Comment ({
         body: req.body?.body
@@ -18,7 +18,7 @@ let createComment = (req, res) =>{
     newComment.save()
         .then(CommentData => {
             //find Post
-            //Update post 
+            //Update Post
             Post.findById(postId)
                 .then(post => {
                     post.comments.push(CommentData?.id);
@@ -50,8 +50,47 @@ let createComment = (req, res) =>{
         })
         
 }
+let getAllComment = (req, res) => {
+    Comment.find()
+       .then(data => {
+           Comment.count()
+           .then(totalCount => {
+               res.json ({
+                   total: totalCount,
+                   data
+               })
+           })
+           .catch(err => {
+               res.json({
+                   err
+               })
+           })
+       })
+       .catch(err => {
+           return res.json({
+               err
+           })
+       })
+}
+let updateCommentById = (req, res) =>{
+    let {id} = req.params;
+    Comment.findByIdAndUpdate(id, req.body, {new: true})
+        .then(data =>{
+            res.json({
+                message: 'Comment updated successfully',
+                data
+            })
+        })
+        .catch(err =>{
+            res.json({
+                err
+            })
+        })
+}
 
 
 module.exports = {
     createComment,
+    getAllComment,
+    updateCommentById,
 }

@@ -2,6 +2,7 @@ const express = require('express')
 const userRoute  = require('./route/user')
 const postRoute  = require('./route/post');
 const authRoute  = require('./route/auth');
+const commentRoute  = require('./route/comment')
 const mongoose   = require("mongoose");
 
 const app = express();
@@ -10,6 +11,7 @@ app.use(express.json());
 app.use('/user', userRoute);
 app.use('/post', postRoute);
 app.use('/auth', authRoute);
+app.use('/comment', commentRoute);
 
 
 
