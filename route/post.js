@@ -2,6 +2,7 @@ const route = require('express').Router();
 const postController = require('../controller/postController');
 const commentController = require('../controller/commentController')
 const authController = require('../controller/authController');
+const likeController = require('../controller/likeController');
 
 route.post('/', postController?.createPost)
 route.get('/', postController?.getAllPost)
@@ -14,6 +15,10 @@ route.delete('/:id',
 );
 
 route.post('/:postId/comment', commentController?.createComment);
-//route.put('/:PostId/like', commentController?.createLike);
- 
+route.put('/:postId/like',
+            authController?.routeProtection,
+            likeController?.doLike);
+route.put('/:postId/dislike',
+            authController?.routeProtection,
+            likeController?.disLike);
 module.exports = route;
